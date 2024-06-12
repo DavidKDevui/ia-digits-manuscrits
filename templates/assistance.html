@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assistance</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <section class="section">
+        <h1 class="h1-title">Assistance</h1>
+        <form id="uploadForm" enctype="multipart/form-data">
+            
+            <div id="result"></div>
+            <textarea placeholder="Posez-nous votre question" class="question-textarea"  required> </textarea><br>
+
+            <div class="div-btn">
+                <input class="btn-submit" type="submit" value="Valider">
+            </div>
+
+        </form>
+        <div id="result"></div>
+    </section>
+
+
+    <style>
+
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .question-textarea{
+            resize: none;
+            width: 100%;
+            font-size: 16px;
+            padding: 6px;
+        }
+
+        #result{
+            text-align: left;
+        }
+
+        .div-btn{
+            width: 280px;
+            margin: 0 auto;
+            display: flex;
+            padding: 15px;
+        }
+
+        .div-btn button{
+            width: 95%;
+            margin: 0 auto;
+            font-size: 20px;
+            padding: 3px;
+        }
+
+        .btn-submit{
+            width: 95%;
+            margin: 0 auto;
+            font-size: 20px;
+            padding: 3px;
+        }
+
+        .h1-title{
+            font-size: 44px;
+        }
+
+        .section{
+            text-align: center;
+            padding: 30px;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            $('#uploadForm').on('submit', function (e) {
+                e.preventDefault();
+
+                var formData = new FormData(this);
+
+                $('#result').html('<p style="color: black">Vous : Avez-vous</p>');
+
+                $.ajax({
+                    url: '/model',
+                    type: 'GET',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        $('#result').html(data);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert('Error: ' + textStatus + ' - ' + errorThrown);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

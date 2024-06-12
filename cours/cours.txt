@@ -1,0 +1,95 @@
+CONCEPT :
+
+
+A. Algorithme d'apprentissage Machine 
+
+	Définition : C'est la manière dont notre IA va être entrainée, l'algorithme utilisé pour l'apprentissage.
+
+	1. Apprentissage supervisé : 
+	L'algorithme apprend à partir d'un ensemble de données étiquetées (où chaque exemple est associé à une réponse correcte).
+		
+		a. Régression linéaire : Trouve la relation entre les valeurs de variables d'entrée (on cherche une donnée à l'aide de plein d'autres.
+                b. Régression logique : Trouve une probabilité ou une réponse binaire (on cherche une proba ou une réponse binaire  à l'aide d'une entrée).
+                c. Arbre de décision : Trouve une réponse binaire en fonction des paramètres d'entrée.
+                d. Forêts aléatoires : Plusieurs arbres de décision❓❓❓
+ 		e. Machines à Vecteurs de Support (SVM) : ❓❓❓
+                f. Réseaux de Neurones : ❓❓❓
+
+
+	2. Apprentissage non-supervisé : 
+	L'algorithme apprend à partir d'un ensemble de données non-étiquetées (où chaque exemple n'est associé à une réponse).
+	
+		a. Clustering (Regroupement) : ❓❓❓
+		b. Réduction de la Dimensionnalité  : ❓❓❓
+   
+
+	
+	3. Apprentissage semi-supervisé : 
+	L'algorithme apprend à partir d'un peu de données étiqueté et beaucoup de non-étiquetés
+
+
+	4. Apprentissage par Renforcement
+        L'algorithme prends des décisions, observe les récompenses et punitions, et ajuste ses actions pour obtenir le meilleur score
+                
+
+
+
+B. Prétraitement des données
+
+        1. Nettoyage de données (gérer les doublons, valeurs aberrantes, valeurs manquantes)
+	2. Transformation de données (normalisation, standardisation des unitées)
+        3. Encodage des variables (toute information doit etre sous le type number) 
+        	-> One Hot Encoding (tableau avec toutes les valeurs, et une ligne par résultat), 
+		   Label Encoding (qu'une table par ligne, qui nous renvoie la couleur)
+
+
+
+C. Evaluation 
+         Classifications : nombres de bonne réponses sur le nombre de réponses total
+         Régression : ❓❓❓
+         Métriques d'évaluation
+  
+
+
+
+PROCESSUS DE DEV
+
+
+1. Définir le problème à résoudre, l'objectif de l'IA
+
+2. Collecte des données, puis nettoyage et transformation
+
+3. Sélection d'un modèle, et l'entrainer avec nos données
+
+4. Evaluer le modèle
+
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+
+Objectif : IA qui va reconnaitre des chiffres manuscrits à partir d'image
+
+
+Tache de classification
+
+
+Apprentissage supervisé : L'algorithme apprend à partir d'un ensemble de données étiquetées. Chaque image est associée à sa réponse
+
+Algorithme : Réseau de neurones -> capaciter à capturer des données de l'image, des paternes plus complexes
+
+Métrique d'Évaluation : Précision, nombre de bonnes réponses sur les réponses totales.
+
+Pooling : on garde les parties sinificatives de l'image (réduit le cout de calcul, précision, robustesse)
+
+
+
+Données d'entrainement : Jeu de donées MINIST (Modified National Institute of Standards and Technology) -< 60 000 images d'entrainement et 10 000 images de test, 28 x 28
+
+
+Modèle CNN -> MNIST Classifier
+
+
+Notions : Epoch
+
+

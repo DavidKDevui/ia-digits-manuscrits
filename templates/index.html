@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> IA Chiffres Manuscrits</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <style>
+
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .section{
+            text-align: center;
+            padding: 30px;
+        }
+
+        .h1-title{
+            font-size: 44px;
+        }
+        #canvas{
+            border: 0.5px solid #0d0d0d;
+            border-radius: 6px;
+        }
+
+        .div-btn{
+            width: 280px;
+            margin: 0 auto;
+            display: flex;
+            padding: 15px;
+        }
+
+        .div-btn button{
+            width: 95%;
+            margin: 0 auto;
+            font-size: 20px;
+            padding: 3px;
+        }
+
+        #predictionResult{
+            padding: 30px;
+            font-size: 22px;
+        }
+        
+        .a-go-training{
+            padding: 15px;
+        }
+
+    </style>
+    <section class="section">
+        <h1 class="h1-title"> IA Chiffres Manuscrits</h1>
+
+        <canvas id="canvas" width="280" height="280"></canvas><br>
+        <div class="div-btn">
+            <button id="predictButton">Prédire</button>
+            <button id="clearButton">Effacer</button>
+        </div>
+
+        <a class="a-go-training" href="/entrainer-le-modele">Entrainer le modèle </a>
+
+        <div id="predictionResult"></div>
+    </section>
+
+    <script>
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+
+        // Définir la couleur de fond du canvas
+        context.fillStyle = 'white';
+        context.fillRect(0, 0, canvas.width, canvas.height);
+
+        var drawing = false;
+        var lastX, lastY;
+
+        canvas.addEventListener('mousedown', function(e) {
+            drawing = true;
+            draw(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, false);
+        });
+
+        canvas.addEventListener('mousemove', function(e) {
+            if (drawing) {
+                draw(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
+            }
+        });
+
+        canvas.addEventListener('mouseup', function() {
+            drawing = false;
+        });
+
+        canvas.addEventListener('mouseleave', function() {
+            drawing = false;
+        });
+
+        function draw(x, y, isDown) {
+            if (isDown) {
+                context.beginPath();
+                context.strokeStyle = 'black';
+                context.lineWidth = 12;
+                context.lineJoin = 'round';
+                context.moveTo(lastX, lastY);
+                context.lineTo(x, y);
+                context.closePath();
+                context.stroke();
+            }
+            lastX = x;
+            lastY = y;
+        }
+
+        $('#predictButton').click(function() {
+            var imageData = canvas.toDataURL('image/png');
+            imageData = imageData.replace("data:image/png;base64," , "");
+            $.ajax({
+                type: 'POST',
+                url: '/predict',
+                contentType: 'application/json',
+                data: JSON.stringify({image: imageData}),
+                success: function(response) {
+                    if (typeof response.prediction == 'number') {
+                        $('#predictionResult').html('<span style="color: green;">Résultat: ' + response.prediction + '</span>');
+                    } else {
+                        $('#predictionResult').html('<span style="color: red;">' + response.prediction + '</span>');
+                    }
+                }
+            });
+        });
+
+        $('#clearButton').click(function() {
+            // Effacer le contenu du canvas
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            // Redessiner le fond blanc
+            context.fillStyle = 'white';
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            $('#predictionResult').text("");
+        });
+    </script>
+</body>
+</html>
