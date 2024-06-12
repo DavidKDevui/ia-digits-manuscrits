@@ -48,7 +48,8 @@ def query_chatgpt():
     return completion['choices'][0]['message']['content']
     
     
-
+    
+    
 @app.route('/training', methods=['POST'])
 def training():
     try:
