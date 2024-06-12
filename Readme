@@ -1,0 +1,37 @@
+Voici notre projet Deep Leaning. Nous avons crée un modèle, capable de reconnaitre un chiffre manuscrit.
+
+Pour ce faire nous avons crée un modèle nous-même. 
+
+Pour ce faire nous avons, dans le fichier api.py importé un jeu de données très connu pour ce genre d'opération, le jeu de données MNIST. Il s'agit d'une liste d'environ 60000 données étiquetées
+contenant des chiffres manuscrits et leur étiquete.
+
+Il s'agit donc d'un apprentissage supervisé, par classification, car on cherche à classer une image (entre 0 et 9).
+
+Ensuite on crée les couches de convolution, de pooling, puis on compile et on entraine le modèle. Pour ce projet, je pense que 12 épochs sont suffisants pour l'enrainement.
+
+On sauvegarde ensuite le modele dans un fichier .h5
+
+En ce qui concerne le front, on utilise flask pour créer des routes.
+
+
+
+-> La premiere route "/" est une page d'accueil permettant à l'utilisateur de dessiner un chiffre.
+
+Au submit, l'image va etre convertie en base64, puis envoyée en POST à la route "/predict", qui va nous retourner sa prédiction
+
+A noter que si l'utilisateur n'a pas entrainé son modèle auparavant, l'application lui demandera de le faire.
+
+
+
+-> Nous avons ensuite une route "/entrainer-le-modele" dans lequel l'utilisateur va pourvoir uploader un jeu d'entrainement et un jeu de test au format .csv, pour l'entrainement
+du modèle. Il doit également choisir le nombre d'epochs pour l'entrainement.
+
+A la soumission de ce formulaire, les deux .csv et le nombre d'epochs vont être transmis à la route "/training" afin d'entrainer le modèle. Après l'entrainement,
+
+le back va retourner au front un message de succès, ainsi que l'accuracy obtenue.
+
+
+
+-> Nous avons également une route "/assistance", dans laquelle l'utilisateur pourra poser ses questions. Il va écrire sa question, et à la soumission du formulaire, 
+cette dernière va etre envoyée en GET à la route "/model", route qui va transmettre cette question en POST à l'API de chatgpt. Cette route va ensuite renvoyer la réponse de 
+chat gpt au front, ce qui va nous permettre d'afficher la réponse à la question.
