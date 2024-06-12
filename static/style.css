@@ -84,3 +84,26 @@ body{
   margin: 0 auto;
   margin-top: 10px;
 }
+
+
+.btn-submit{
+    width: 95%;
+    margin: 0 auto;
+    font-size: 20px;
+    padding: 3px;
+}
+
+
+#predictionResult{
+    padding: 30px;
+    font-size: 22px;
+}
+
+.a-go-training{
+    padding: 15px;
+}
+
+#canvas{
+    border: 0.5px solid #0d0d0d;
+    border-radius: 6px;
+}
