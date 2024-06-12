@@ -46,8 +46,41 @@ body{
 
 
 #result {
-    height: 500px;
+    height: 450px;
     overflow: hidden;
     overflow-y: hidden;
     overflow-y: auto;
+
+}
+
+
+.div-btn{
+    width: 280px;
+    margin: 0 auto;
+    display: flex;
+    padding: 15px;
+}
+
+.div-btn button{
+    width: 95%;
+    margin: 0 auto;
+    font-size: 20px;
+    padding: 3px;
+}
+
+
+
+.question-textarea{
+    resize: none;
+
+    font-size: 16px;
+    padding: 5px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+
+
+    width: 1000px;
+  margin: 0 auto;
+  margin-top: 10px;
 }

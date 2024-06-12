@@ -21,43 +21,29 @@
         <form id="uploadForm" enctype="multipart/form-data">
             
             <div id="result"></div>
-            <input type="text" id="question" placeholder="Posez-nous votre question" class="question-textarea"  autocomplete="off"  required/><br>
+            <input type="text" id="question" placeholder="Posez-nous votre question" class="question-textarea"  autocomplete="off" required/><br>
 
             <div class="div-btn">
                 <input class="btn-submit" type="submit" value="Valider">
             </div>
 
         </form>
-        <div id="result"></div>
     </section>
 
 
     <style>
 
-        .question-textarea{
-            resize: none;
-            width: 100%;
-            font-size: 16px;
-            padding: 6px;
-        }
+
 
         #result{
             text-align: left;
+            border: 2px solid #ececec;
+            padding: 10px;
+            width: 1000px;
+            margin: 0 auto;
         }
 
-        .div-btn{
-            width: 280px;
-            margin: 0 auto;
-            display: flex;
-            padding: 15px;
-        }
-
-        .div-btn button{
-            width: 95%;
-            margin: 0 auto;
-            font-size: 20px;
-            padding: 3px;
-        }
+        
 
         .btn-submit{
             width: 95%;
