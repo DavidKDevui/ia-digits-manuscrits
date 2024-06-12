@@ -11,7 +11,7 @@
         <form id="uploadForm" enctype="multipart/form-data">
             
             <div id="result"></div>
-            <textarea placeholder="Posez-nous votre question" class="question-textarea"  required> </textarea><br>
+            <input type="text" id="question" placeholder="Posez-nous votre question" class="question-textarea"  required/><br>
 
             <div class="div-btn">
                 <input class="btn-submit" type="submit" value="Valider">
@@ -74,23 +74,21 @@
             $('#uploadForm').on('submit', function (e) {
                 e.preventDefault();
 
-                var formData = new FormData(this);
+                question = document.getElementById("question").value
 
-                $('#result').html('<p style="color: black">Vous : Avez-vous</p>');
+                $('#result').append('<p style="color: black">Vous : '  +  question +  '</p>');
 
                 $.ajax({
                     url: '/model',
                     type: 'GET',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
+                    data: { question: question },
                     success: function (data) {
-                        $('#result').html(data);
+                        $('#result').append('<p style="color: green">IA : ' + data + '</p>');
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        alert('Error: ' + textStatus + ' - ' + errorThrown);
+                        $('#result').append('<p style="color: red">IA : Erreur lors de la requête</p>');
                     }
-                });
+                    });
             });
         });
     </script>

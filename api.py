@@ -9,21 +9,40 @@ from tensorflow.keras.layers import Dense, Conv2D, MaxPooling2D, Flatten, Dropou
 from tensorflow.keras.utils import to_categorical
 from PIL import Image, ImageOps
 import pandas as pd
+import requests
+import openai
 
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
+openai.api_key = "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"
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
 
+@app.route('/model', methods=['GET'])
+def query_chatgpt():    
+    
+    question = request.args.get('question')
+
+    prompt = f"{question}. Réponds brièvement, en maximum deux phrases"
+
+    completion = openai.ChatCompletion.create(
+    model="gpt-3.5-turbo", 
+    messages=[{"role": "user", "content": prompt}]
+    )
+
+    return completion['choices'][0]['message']['content']
+    
+    
+
 @app.route('/assistance')
-def model():
+def assistance():
     return render_template('assistance.html')
+
 
 
 @app.route('/entrainer-le-modele', methods=['GET'])
