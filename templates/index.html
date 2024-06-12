@@ -5,23 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> IA Chiffres Manuscrits</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
     <style>
 
-        body{
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .section{
-            text-align: center;
-            padding: 30px;
-        }
-
-        .h1-title{
-            font-size: 44px;
-        }
+        
         #canvas{
             border: 0.5px solid #0d0d0d;
             border-radius: 6px;
@@ -51,6 +41,16 @@
         }
 
     </style>
+
+
+    <nav class="navbar">
+        <ul>
+            <li><a href="/">Accueil</a></li>
+            <li><a href="/entrainer-le-modele">Entraîner un modèle</a></li>
+            <li><a href="/assistance">Assistance</a></li>
+        </ul>
+    </nav>
+
     <section class="section">
         <h1 class="h1-title"> IA Chiffres Manuscrits</h1>
 

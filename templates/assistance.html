@@ -4,14 +4,24 @@
     <meta charset="UTF-8">
     <title>Assistance</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+
+    <nav class="navbar">
+        <ul>
+            <li><a href="/">Accueil</a></li>
+            <li><a href="/entrainer-le-modele">Entraîner un modèle</a></li>
+            <li><a href="/assistance">Assistance</a></li>
+        </ul>
+    </nav>
+
     <section class="section">
         <h1 class="h1-title">Assistance</h1>
         <form id="uploadForm" enctype="multipart/form-data">
             
             <div id="result"></div>
-            <input type="text" id="question" placeholder="Posez-nous votre question" class="question-textarea"  required/><br>
+            <input type="text" id="question" placeholder="Posez-nous votre question" class="question-textarea"  autocomplete="off"  required/><br>
 
             <div class="div-btn">
                 <input class="btn-submit" type="submit" value="Valider">
@@ -24,9 +34,6 @@
 
     <style>
 
-        body{
-            font-family: Arial, Helvetica, sans-serif;
-        }
         .question-textarea{
             resize: none;
             width: 100%;
@@ -58,15 +65,6 @@
             font-size: 20px;
             padding: 3px;
         }
-
-        .h1-title{
-            font-size: 44px;
-        }
-
-        .section{
-            text-align: center;
-            padding: 30px;
-        }
     </style>
 
     <script>
@@ -75,8 +73,8 @@
                 e.preventDefault();
 
                 question = document.getElementById("question").value
-
                 $('#result').append('<p style="color: black">Vous : '  +  question +  '</p>');
+                document.getElementById("question").value = ""
 
                 $.ajax({
                     url: '/model',
@@ -84,6 +82,7 @@
                     data: { question: question },
                     success: function (data) {
                         $('#result').append('<p style="color: green">IA : ' + data + '</p>');
+                        
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         $('#result').append('<p style="color: red">IA : Erreur lors de la requête</p>');

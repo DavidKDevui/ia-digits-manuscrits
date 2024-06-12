@@ -4,8 +4,18 @@
     <meta charset="UTF-8">
     <title>Entrainement du modèle</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+
+    <nav class="navbar">
+        <ul>
+            <li><a href="/">Accueil</a></li>
+            <li><a href="/entrainer-le-modele">Entraîner un modèle</a></li>
+            <li><a href="/assistance">Assistance</a></li>
+        </ul>
+    </nav>
+
     <section class="section">
         <h1 class="h1-title">Entrainement du modèle</h1>
         <form id="uploadForm" enctype="multipart/form-data">
@@ -28,9 +38,6 @@
 
     <style>
 
-        body{
-            font-family: Arial, Helvetica, sans-serif;
-        }
 
         .div-btn{
             width: 280px;
@@ -53,14 +60,7 @@
             padding: 3px;
         }
 
-        .h1-title{
-            font-size: 44px;
-        }
 
-        .section{
-            text-align: center;
-            padding: 30px;
-        }
     </style>
 
     <script>
