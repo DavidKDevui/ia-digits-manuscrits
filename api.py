@@ -10,8 +10,7 @@ from tensorflow.keras.utils import to_categorical
 from PIL import Image, ImageOps
 import pandas as pd
 import openai
-from flasgger import Swagger, swag_from
-
+from flasgger import Swagger
 
 app = Flask(__name__)
 swagger = Swagger(app)
@@ -21,38 +20,66 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 openai.api_key = "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"
 
 
-
 @app.route('/')
 def index():
     """
-    A simple greeting endpoint.
+    Retourne la page d'accueil
     ---
     responses:
       200:
-        description: A successful response
-        schema:
-          type: object
-          properties:
-            message:
-              type: string
-              example: Hello, World!
+        description: La page d'accueil a été retournée avec succès.
     """
     return render_template('index.html')
 
+
+
 @app.route('/entrainer-le-modele', methods=['GET'])
 def entrainer_un_modele():
+    """
+    Retourne la page d'entraînement du modèle
+    ---
+    responses:
+      200:
+        description: La page d'entraînement du modèle a été retournée avec succès.
+    """
     return render_template('entrainer-le-modele.html')
+
+
 
 @app.route('/assistance')
 def assistance():
+    """
+    Retourne la page d'assistance
+    ---
+    responses:
+      200:
+        description: La page d'assistance a été retournée avec succès.
+    """
     return render_template('assistance.html')
-
 
 
 
 @app.route('/model', methods=['GET'])
 def query_chatgpt():    
-    
+    """
+    Interroge le modèle GPT-3.5 pour obtenir une réponse à une question donnée.
+    ---
+    parameters:
+      - name: question
+        in: query
+        type: string
+        required: true
+        description: La question à poser au modèle.
+    responses:
+      200:
+        description: Une réponse réussie
+        schema:
+          type: object
+          properties:
+            response:
+              type: string
+              example: "Voici la réponse du modèle."
+    """
     question = request.args.get('question')
     prompt = f"{question}. Réponds brièvement, en maximum deux phrases"
 
@@ -63,11 +90,36 @@ def query_chatgpt():
 
     return completion['choices'][0]['message']['content']
     
-    
-    
-    
+
 @app.route('/training', methods=['POST'])
 def training():
+    """
+    Entraîne le modèle de réseau neuronal avec les données fournies.
+    ---
+    parameters:
+      - name: Jeu de données d'entraînement
+        in: formData
+        type: file
+        required: true
+        description: Le fichier de données d'entraînement (format CSV).
+      - name: Jeu de données de validation
+        in: formData
+        type: file
+        required: true
+        description: Le fichier de données de validation (format CSV).
+      - name: Epochs
+        in: formData
+        type: integer
+        required: true
+        description: Le nombre d'époques d'entraînement.
+    responses:
+      200:
+        description: Entraînement terminé avec succès.
+      400:
+        description: Requête incorrecte. Fichiers manquants ou données d'entrée invalides.
+      500:
+        description: Erreur interne du serveur. Une erreur s'est produite pendant l'entraînement.
+    """
     try:
         # Vérifier et stocker les fichiers reçus dans des variables
         file1 = request.files.get('file1')
@@ -133,10 +185,36 @@ def training():
 
     return render_template_string(template)
 
-
     
 @app.route('/predict', methods=['POST'])
 def predict():
+    """
+    Prédise le chiffre manuscrit contenu dans l'image fournie.
+    ---
+    parameters:
+      - name: image
+        in: body
+        required: true
+        description: L'image du chiffre manuscrit encodée en base64.
+        schema:
+          type: object
+          properties:
+            image:
+              type: string
+    responses:
+      200:
+        description: Prédiction réussie.
+        schema:
+          type: object
+          properties:
+            prediction:
+              type: integer
+              description: Le chiffre prédit.
+      400:
+        description: Requête incorrecte. L'image fournie est vide ou invalide.
+      500:
+        description: Erreur interne du serveur. Le modèle n'a pas encore été entraîné.
+    """
     if os.path.exists('uploads/mnist_model.h5'):
         model = load_model('uploads/mnist_model.h5')
         data = request.get_json()["image"]
@@ -157,6 +235,7 @@ def predict():
         return jsonify({"prediction": int(predicted_digit)})
     else:
         return jsonify({"prediction": "Le modèle n'a pas encore été entrainé"})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
