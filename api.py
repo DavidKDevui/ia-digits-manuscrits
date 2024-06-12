@@ -25,6 +25,8 @@ def index():
     """
     Retourne la page d'accueil
     ---
+    tags:
+      - Frontend
     responses:
       200:
         description: La page d'accueil a été retournée avec succès.
@@ -38,6 +40,8 @@ def entrainer_un_modele():
     """
     Retourne la page d'entraînement du modèle
     ---
+    tags:
+      - Frontend
     responses:
       200:
         description: La page d'entraînement du modèle a été retournée avec succès.
@@ -51,6 +55,8 @@ def assistance():
     """
     Retourne la page d'assistance
     ---
+    tags:
+      - Frontend
     responses:
       200:
         description: La page d'assistance a été retournée avec succès.
@@ -64,6 +70,8 @@ def query_chatgpt():
     """
     Interroge le modèle GPT-3.5 pour obtenir une réponse à une question donnée.
     ---
+    tags:
+      - Backend
     parameters:
       - name: question
         in: query
@@ -96,6 +104,8 @@ def training():
     """
     Entraîne le modèle de réseau neuronal avec les données fournies.
     ---
+    tags:
+      - Backend
     parameters:
       - name: Jeu de données d'entraînement
         in: formData
@@ -191,6 +201,8 @@ def predict():
     """
     Prédise le chiffre manuscrit contenu dans l'image fournie.
     ---
+    tags:
+      - Backend
     parameters:
       - name: image
         in: body
