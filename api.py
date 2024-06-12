@@ -1,15 +1,14 @@
-from flask import Flask, request, jsonify, render_template, render_template_string, redirect, flash
+from flask import Flask, request, jsonify, render_template, render_template_string, flash
 import base64
 from werkzeug.utils import secure_filename
 from io import BytesIO
 import numpy as np
 import os
 from tensorflow.keras.models import load_model, Sequential
-from tensorflow.keras.layers import Dense, Conv2D, MaxPooling2D, Flatten, Dropout
+from tensorflow.keras.layers import Dense, Conv2D, MaxPooling2D, Flatten
 from tensorflow.keras.utils import to_categorical
 from PIL import Image, ImageOps
 import pandas as pd
-import requests
 import openai
 
 
@@ -22,12 +21,22 @@ openai.api_key = "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"
 def index():
     return render_template('index.html')
 
+@app.route('/assistance')
+def assistance():
+    return render_template('assistance.html')
+
+
+@app.route('/entrainer-le-modele', methods=['GET'])
+def entrainer_un_modele():
+    return render_template('entrainer-le-modele.html')
+
+
+
 
 @app.route('/model', methods=['GET'])
 def query_chatgpt():    
     
     question = request.args.get('question')
-
     prompt = f"{question}. Réponds brièvement, en maximum deux phrases"
 
     completion = openai.ChatCompletion.create(
@@ -38,18 +47,6 @@ def query_chatgpt():
     return completion['choices'][0]['message']['content']
     
     
-
-@app.route('/assistance')
-def assistance():
-    return render_template('assistance.html')
-
-
-
-@app.route('/entrainer-le-modele', methods=['GET'])
-def entrainer_un_modele():
-    return render_template('entrainer-le-modele.html')
-
-
 
 @app.route('/training', methods=['POST'])
 def training():
