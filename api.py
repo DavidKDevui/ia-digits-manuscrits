@@ -10,9 +10,12 @@ from tensorflow.keras.utils import to_categorical
 from PIL import Image, ImageOps
 import pandas as pd
 import openai
+from flasgger import Swagger, swag_from
 
 
 app = Flask(__name__)
+swagger = Swagger(app)
+
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 openai.api_key = "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"
@@ -21,6 +24,19 @@ openai.api_key = "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"
 
 @app.route('/')
 def index():
+    """
+    A simple greeting endpoint.
+    ---
+    responses:
+      200:
+        description: A successful response
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: Hello, World!
+    """
     return render_template('index.html')
 
 @app.route('/entrainer-le-modele', methods=['GET'])
